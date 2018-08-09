@@ -39,7 +39,15 @@ function initialize() {
     {
       type: 'input',
       name: 'quantity',
-      message: 'How many orders would you like?'
+      message: 'How many orders would you like?',
+      validate: function(value) {
+        if (isNaN(value) || parseInt(value) < 0) {
+          return false,
+          console.log("\nPlease enter a positive integer.");
+        } else {
+          return true;
+        }
+      }
     }
   ]).then(function (answers) {
     var meal = answers.choice;
@@ -59,7 +67,7 @@ function initialize() {
       function(err) {
         if(err) throw err;
         console.log("Your total is $" + totalCost + ".\n" +
-        quantity + " orders of " + res[meal-1].product_name + " coming right up!");
+        quantity + " orders of " + res[meal-1].product_name + " from " + res[meal-1].department_name + " coming right up!");
         connection.end();
         });
     } else {
