@@ -44,7 +44,7 @@ function initialize() {
   ]).then(function (answers) {
     var meal = answers.choice;
     var quantity = answers.quantity;
-    console.log(meal, res[meal-1].product_name);
+    var totalCost = parseFloat(((res[meal-1].price) * quantity).toFixed(2));
 
     if (quantity <= res[meal-1].stock_quantity) {
       connection.query("UPDATE products SET ? WHERE ?",
@@ -58,7 +58,8 @@ function initialize() {
       ],
       function(err) {
         if(err) throw err;
-        console.log(quantity + " orders of " + res[meal-1].product_name + " coming right up!");
+        console.log("Your total is $" + totalCost + ".\n" +
+        quantity + " orders of " + res[meal-1].product_name + " coming right up!");
         connection.end();
         });
     } else {
